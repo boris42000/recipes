@@ -1,0 +1,215 @@
+.recipe {
+  padding-bottom: 24px;
+}
+
+.back {
+  display: inline-block;
+  margin-bottom: 12px;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.hero {
+  border-radius: var(--radius);
+  margin: 0 -16px;
+  width: calc(100% + 32px);
+  border-radius: 0;
+}
+
+@media (min-width: 600px) {
+  .hero {
+    margin: 0;
+    width: 100%;
+    border-radius: var(--radius);
+  }
+}
+
+.header {
+  margin: 20px 0;
+}
+
+.header h1 {
+  font-size: clamp(1.9rem, 7vw, 2.6rem);
+  margin-bottom: 8px;
+}
+
+.description {
+  color: var(--muted);
+  margin: 0 0 16px;
+  font-size: 1.05rem;
+}
+
+.times {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.times div {
+  padding: 10px 12px;
+  text-align: center;
+}
+
+.times div + div {
+  border-left: 1px solid var(--border);
+}
+
+.times dt {
+  font-size: 0.75rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.times dd {
+  margin: 0;
+  font-weight: 600;
+}
+
+.tags {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tags a {
+  display: inline-block;
+  font-size: 0.85rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--accent-soft);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.cookButton {
+  width: 100%;
+  min-height: 52px;
+  font-size: 1.05rem;
+}
+
+.section {
+  margin-top: 32px;
+}
+
+.section h2 {
+  font-size: 1.5rem;
+}
+
+.sectionHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.sectionHead h2 {
+  margin: 0;
+}
+
+.stepper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+}
+
+.stepper button {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  background: none;
+  font-size: 1.4rem;
+  line-height: 1;
+  color: var(--accent);
+}
+
+.stepper button:disabled {
+  color: var(--border);
+  cursor: default;
+}
+
+.stepper output {
+  min-width: 6.5em;
+  text-align: center;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.linkButton {
+  border: 0;
+  background: none;
+  padding: 4px 0;
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.hint {
+  color: var(--muted);
+  font-size: 0.875rem;
+  margin: 8px 0 0;
+}
+
+.steps {
+  list-style: none;
+  counter-reset: step;
+  padding: 0;
+  margin: 0;
+}
+
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding: 0 0 18px 44px;
+  font-size: 1.05rem;
+}
+
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.notes {
+  padding: 16px 18px;
+  border-radius: var(--radius);
+  background: var(--accent-soft);
+}
+
+.notes :global(h2) {
+  font-size: 1.2rem;
+}
+
+.notes > :last-child {
+  margin-bottom: 0;
+}
+
+.notes :global(ul) {
+  padding-left: 1.2em;
+}
+
+.source {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-top: 24px;
+}
