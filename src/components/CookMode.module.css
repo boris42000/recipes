@@ -9,6 +9,12 @@
   outline: none;
 }
 
+.overlay > * {
+  width: 100%;
+  max-width: 760px;
+  margin-inline: auto;
+}
+
 .top {
   display: flex;
   align-items: center;

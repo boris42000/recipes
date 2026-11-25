@@ -31,7 +31,6 @@ export default defineConfig({
     spaFallback(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['icon.svg', 'apple-touch-icon.png'],
       manifest: {
         name: 'Naše recepty',
         short_name: 'Recepty',
