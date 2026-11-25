@@ -28,10 +28,22 @@ export function roundQty(value: number, unit: Unit | undefined): number {
   }
 }
 
-export function scaleIngredient(ing: Ingredient, factor: number): number | undefined {
-  if (ing.qty === undefined) return undefined // never scale "kyslá smotana" without an amount
-  if (factor === 1) return ing.qty
-  return roundQty(ing.qty * factor, ing.unit)
+const smallerUnit: Partial<Record<Unit, Unit>> = { kg: 'g', l: 'ml' }
+
+export type Amount = { qty?: number; unit?: Unit }
+
+export function scaleIngredient(ing: Ingredient, factor: number): Amount {
+  // Never scale items without an amount ("kyslá smotana"), and show unscaled ones as written.
+  if (ing.qty === undefined || factor === 1) return { qty: ing.qty, unit: ing.unit }
+  let qty = ing.qty * factor
+  let unit = ing.unit
+  // 0,65 kg → 650 g: easier to read off a kitchen scale.
+  const smaller = unit && smallerUnit[unit]
+  if (smaller && qty < 1) {
+    qty *= 1000
+    unit = smaller
+  }
+  return { qty: roundQty(qty, unit), unit }
 }
 
 /** "1,5 lyžice" / "250 g" / "" (no qty) */

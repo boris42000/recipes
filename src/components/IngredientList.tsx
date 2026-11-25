@@ -22,7 +22,8 @@ export function IngredientList({ groups, factor, checked, onToggle, large }: Pro
             {group.items.map((ing, ii) => {
               const key = ingredientKey(gi, ii)
               const isChecked = checked.includes(key)
-              const amount = formatAmount(scaleIngredient(ing, factor), ing.unit)
+              const scaled = scaleIngredient(ing, factor)
+              const amount = formatAmount(scaled.qty, scaled.unit)
               return (
                 <li key={key}>
                   <button
