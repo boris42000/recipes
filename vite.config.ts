@@ -23,12 +23,27 @@ function spaFallback(): Plugin {
   }
 }
 
+/** In `npm run dev`, serve the CMS at /recipes/admin/ instead of the SPA fallback. */
+function adminDevRoute(): Plugin {
+  return {
+    name: 'admin-dev-route',
+    apply: 'serve',
+    configureServer(server) {
+      server.middlewares.use((req, _res, next) => {
+        if (req.url === `${base}admin` || req.url === `${base}admin/`) req.url = `${base}admin/index.html`
+        next()
+      })
+    },
+  }
+}
+
 export default defineConfig({
   base,
   plugins: [
     react(),
     recipesPlugin({ dir: 'recipes', publicDir: 'public' }),
     spaFallback(),
+    adminDevRoute(),
     VitePWA({
       registerType: 'autoUpdate',
       manifest: {
