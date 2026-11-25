@@ -1,0 +1,124 @@
+# yaml-language-server: $schema=https://unpkg.com/@sveltia/cms/schema/sveltia-cms.json
+# Sveltia CMS config — https://sveltiacms.app/docs
+# Keep fields in sync with src/lib/schema.ts (the build validates every recipe against it).
+
+backend:
+  name: github
+  repo: boris42000/recipes
+  branch: main
+  # Sign in with a GitHub fine-grained personal access token (Contents: read & write).
+  # No OAuth server needed. See README → "One-time setup".
+  auth_methods: [token]
+  commit_messages:
+    create: 'Add recipe “{{slug}}”'
+    update: 'Update recipe “{{slug}}”'
+    delete: 'Delete recipe “{{slug}}”'
+    uploadMedia: 'Upload “{{path}}”'
+    deleteMedia: 'Delete “{{path}}”'
+
+media_folder: public/images
+public_folder: /images # the site prefixes this with its base path (/recipes/)
+
+media_libraries:
+  default:
+    config:
+      max_file_size: 15000000
+      slugify_filename: true
+      # Shrink photos in the browser before they are committed: WebP, max 1200 × 1600 px.
+      transformations:
+        raster_image:
+          format: webp
+          quality: 80
+          width: 1200
+          height: 1600
+
+# Don't write `note:` / `qty:` keys with empty values into the Markdown files.
+output:
+  omit_empty_optional_fields: true
+
+# File names: "Bryndzové halušky" → bryndzove-halusky.md
+slug:
+  encoding: ascii
+  clean_accents: true
+  sanitize_replacement: '-'
+
+collections:
+  - name: recipes
+    label: Recepty
+    label_singular: Recept
+    description: Naše recepty. Každý recept je jeden súbor v priečinku /recipes.
+    folder: recipes
+    extension: md
+    format: frontmatter
+    create: true
+    slug: '{{title}}'
+    identifier_field: title
+    summary: '{{title}}'
+    sortable_fields: [title, prepTime, cookTime]
+    fields:
+      - { name: title, label: Názov, widget: string }
+      - { name: description, label: Krátky popis, widget: text }
+      - name: servings
+        label: Počet porcií
+        widget: number
+        value_type: int
+        min: 1
+        default: 4
+      - name: prepTime
+        label: Príprava (minúty)
+        widget: number
+        value_type: int
+        min: 0
+        default: 15
+      - name: cookTime
+        label: Varenie (minúty)
+        widget: number
+        value_type: int
+        min: 0
+        default: 30
+      - name: tags
+        label: Štítky
+        label_singular: Štítok
+        widget: list
+        required: false
+        hint: 'Napr. polievka, hlavné jedlo, dezert, vegetariánske'
+      - { name: image, label: Fotka, widget: image, required: false }
+      - name: source
+        label: Zdroj
+        widget: string
+        required: false
+        hint: Odkaz na pôvodný recept alebo napr. „babka“.
+      - name: ingredients
+        label: Suroviny
+        label_singular: Skupina surovín
+        widget: list
+        summary: '{{group}}'
+        hint: Suroviny môžeš rozdeliť do skupín (napr. Cesto, Plnka). Ak netreba, nechaj názov skupiny prázdny.
+        fields:
+          - { name: group, label: Názov skupiny, widget: string, required: false }
+          - name: items
+            label: Položky
+            label_singular: Surovina
+            widget: list
+            summary: '{{qty}} {{unit}} {{item}}'
+            fields:
+              - name: qty
+                label: Množstvo
+                widget: number
+                value_type: float
+                min: 0
+                step: 0.01
+                required: false
+                hint: Bez množstva sa surovina pri zmene porcií neprepočítava.
+              - name: unit
+                label: Jednotka
+                widget: select
+                required: false
+                options: [g, kg, ml, l, ks, lyžica, lyžička, štipka]
+              - { name: item, label: Surovina, widget: string }
+              - { name: note, label: Poznámka, widget: string, required: false }
+      - name: body
+        label: Postup a poznámky
+        widget: markdown
+        buttons: [bold, italic, link, heading-two, bulleted-list, numbered-list]
+        hint: Kroky napíš ako číslovaný zoznam (1., 2., 3. …). Pod ním môžeš pridať nadpis „Poznámky“ a tipy.
