@@ -67,7 +67,7 @@ Tags double as categories. These tags have their own colorful icon and color (de
 
 Recipes that still need a method are listed in [`TODO-RECEPTY.md`](TODO-RECEPTY.md).
 
-The body must contain the steps as a numbered list. Unknown fields are rejected, so typos like `servngs` are caught.
+Steps go in the body as a numbered list. A recipe without steps is allowed: it shows its ingredients and a "method missing" note, and has no cook mode. Unknown fields are rejected, so typos like `servngs` are caught.
 
 **Validation:** `npm run build` (and therefore every deploy) fails if any recipe is invalid, and the error names the file and field:
 

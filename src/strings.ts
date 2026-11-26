@@ -51,6 +51,7 @@ export const s = {
   source: 'Zdroj',
   ingredients: 'Suroviny',
   steps: 'Postup',
+  noSteps: 'Postup zatiaľ nie je napísaný. Doplníme ho, keď to budeme variť nabudúce.',
   servings: (n: number) => `${n} ${plural(n, 'porcia', 'porcie', 'porcií')}`,
   fewerServings: 'Menej porcií',
   moreServings: 'Viac porcií',

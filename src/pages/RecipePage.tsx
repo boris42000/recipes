@@ -81,9 +81,11 @@ function RecipeView({ recipe }: { recipe: Recipe }) {
         )}
       </header>
 
-      <button type="button" className={`button button-primary ${styles.cookButton}`} onClick={openCookMode}>
-        {s.cookMode}
-      </button>
+      {recipe.steps.length > 0 && (
+        <button type="button" className={`button button-primary ${styles.cookButton}`} onClick={openCookMode}>
+          {s.cookMode}
+        </button>
+      )}
 
       <section className={styles.section}>
         <div className={styles.sectionHead}>
@@ -129,11 +131,15 @@ function RecipeView({ recipe }: { recipe: Recipe }) {
 
       <section className={styles.section}>
         <h2>{s.steps}</h2>
-        <ol className={styles.steps}>
-          {recipe.steps.map((html, i) => (
-            <li key={i} dangerouslySetInnerHTML={{ __html: html }} />
-          ))}
-        </ol>
+        {recipe.steps.length > 0 ? (
+          <ol className={styles.steps}>
+            {recipe.steps.map((html, i) => (
+              <li key={i} dangerouslySetInnerHTML={{ __html: html }} />
+            ))}
+          </ol>
+        ) : (
+          <p className={styles.hint}>{s.noSteps}</p>
+        )}
       </section>
 
       {recipe.notesHtml && (
@@ -153,7 +159,7 @@ function RecipeView({ recipe }: { recipe: Recipe }) {
         </p>
       )}
 
-      {cooking && (
+      {cooking && recipe.steps.length > 0 && (
         <CookMode
           recipe={recipe}
           factor={factor}

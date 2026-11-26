@@ -98,10 +98,7 @@ export function loadRecipes(recipesDir: string, publicDir: string): Recipe[] {
     }
 
     const { steps, notesHtml } = parseBody(body)
-    if (steps.length === 0) {
-      fail('body must contain the steps as a numbered list ("1. …", "2. …")')
-      continue
-    }
+    // No numbered list is fine: the recipe shows its ingredients and a "method missing" note.
 
     recipes.push({ slug, ...fm, steps, notesHtml })
   }

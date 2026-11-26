@@ -62,21 +62,8 @@ Keď dopíšeme postup, z každého spravíme súbor v [`recipes/`](recipes/) a 
 - [ ] Mäso s arašidmi (podľa Borisa)
 - [ ] Kuracie mäso do tortily
 
-## Je napísané, čo do toho ide, ale chýba postup
-
-- [ ] **Sendvič**: vajce, slanina, medovo-horčicová majonéza, šalát, rajčina
-- [ ] **Šľahaný jogurt s fetou**: jogurt vyšľahaný s fetou, pečené rajčinky, olej, možno chilli, semienka, k tomu pita chlieb
-- [ ] **Pečené bielka s kozím syrom**: bielka vyšľahané a upečené, krém vyšľahaný s kozím syrom, navrch ovocná omáčka s rozmarínom, k tomu pita alebo chlieb
-- [ ] **Cestoviny so slaninou, rajčinami, cuketou a vínom**
-- [ ] **Chlieb s lučinou, cviklou a balzamikom**
-- [ ] **Chlieb s dyňovým hummusom, údeným tofu a dyňovými semiačkami**
-- [ ] **Kari s cuketou, paprikou, cibuľou a kuracím mäsom**
-- [ ] **Pórová polievka**: 2–3 póry, cibuľa, zemiaky, cukety, hrášok, smotana
-- [ ] **Karbonátky s modrým syrom**: bravčové mäso, tymian, niva alebo iný plesňový syr, jablko, soľ, korenie
-- [ ] **Falafel**: cícer namočiť cez noc, uvariť, roztlačiť, pridať čerstvý koriander, rímsky kmín a cícerovú múku. *Chýba: ako ich tvarovať a smažiť alebo piecť.*
-- [ ] **Citrónové kura (podľa Kitchenette) s cestovinou**: do omáčky ešte asi 70 g parmezánu
-
 ## Už sú na stránke
 
+- Recepty, kde je napísané, čo do nich ide, ale chýba postup (Falafel, Pórová polievka, Karbonátky…), sú už na stránke. Postup sa dá kedykoľvek dopísať v `/admin`.
 - Gnocchi podľa Kitchenette → [Kitchenette noky](recipes/kitchenette-noky.md)
 - Krúpoto s cviklou/hokaido → [Tekvicové krúpoto](recipes/tekvicove-krupoto.md)
