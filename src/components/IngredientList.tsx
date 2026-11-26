@@ -1,5 +1,6 @@
 import type { IngredientGroup } from '../lib/schema'
 import { formatAmount, scaleIngredient } from '../lib/format'
+import { ingredientEmoji } from '../lib/ingredientEmoji'
 import styles from './IngredientList.module.css'
 
 export const ingredientKey = (group: number, item: number) => `${group}-${item}`
@@ -34,6 +35,9 @@ export function IngredientList({ groups, factor, checked, onToggle, large }: Pro
                     onClick={() => onToggle(key)}
                   >
                     <span className={styles.box} aria-hidden="true" />
+                    <span className={styles.emoji} aria-hidden="true">
+                      {ingredientEmoji(ing.item)}
+                    </span>
                     <span className={styles.text}>
                       {amount && <strong className={styles.amount}>{amount}</strong>} {ing.item}
                       {ing.note && <span className={styles.note}>, {ing.note}</span>}
