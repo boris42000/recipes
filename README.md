@@ -24,9 +24,9 @@ Create `recipes/<slug>.md`. The filename must be lowercase ASCII with dashes, wi
 ---
 title: Bryndzové halušky
 description: Klasika zo zemiakového cesta s bryndzou a chrumkavou slaninou.
-servings: 4
-prepTime: 25        # minutes
-cookTime: 20        # minutes
+servings: 4         # optional
+prepTime: 25        # optional, minutes
+cookTime: 20        # optional, minutes
 tags: [slovenské, hlavné jedlo]
 image: /images/bryndzove-halusky.webp   # optional, file in public/images/
 source: https://example.com/recept      # optional, URL or free text ("babka")
@@ -51,15 +51,21 @@ ingredients:
 |---|---|---|
 | `title` | string | ✓ |
 | `description` | string | ✓ |
-| `servings` | integer ≥ 1 | ✓ |
-| `prepTime`, `cookTime` | integer minutes ≥ 0 | ✓ |
+| `servings` | integer ≥ 1 (without it the portion stepper is hidden) | |
+| `prepTime`, `cookTime` | integer minutes ≥ 0 (shown only when set) | |
 | `tags` | list of strings | |
 | `image` | path like `/images/x.webp`, or a full URL | |
 | `source` | string (URL or text) | |
 | `ingredients` | list of groups `{ group?, items }` | ✓ (≥ 1) |
 | `ingredients[].items[]` | `{ qty?, unit?, item, note? }` | `item` ✓ |
 
-Allowed units: `g`, `kg`, `ml`, `l`, `ks`, `lyžica`, `lyžička`, `štipka`. To add one, edit `UNITS` in [`src/lib/schema.ts`](src/lib/schema.ts), the `unit` options in [`public/admin/config.yml`](public/admin/config.yml), and the plural forms in `src/strings.ts`.
+Allowed units: `g`, `kg`, `ml`, `l`, `ks`, `lyžica`, `lyžička`, `štipka`, `strúčik`, `hrnček`, `hrsť`, `plechovka`, `balenie`. To add one, edit `UNITS` in [`src/lib/schema.ts`](src/lib/schema.ts), the `unit` options in [`public/admin/config.yml`](public/admin/config.yml), the plural forms in `src/strings.ts`, and the rounding in `src/lib/format.ts`.
+
+### Categories and icons
+
+Tags double as categories. These tags have their own colorful icon and color (defined in [`src/components/CategoryIcon.tsx`](src/components/CategoryIcon.tsx)): `polievka`, `cestoviny`, `ryby`, `kuracie`, `mäso`, `tacos`, `ázijské`, `šalát`, `raňajky`, `dezert`, `pečenie`, `omáčka`, `vegetariánske`, `rýchlovka`, `slovenské`, `vianoce`, `hlavné jedlo`. A recipe without a photo shows the icon of its most specific category. Any other tag gets a cooking pot.
+
+Recipes that still need a method are listed in [`TODO-RECEPTY.md`](TODO-RECEPTY.md).
 
 The body must contain the steps as a numbered list. Unknown fields are rejected, so typos like `servngs` are caught.
 

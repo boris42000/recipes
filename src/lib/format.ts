@@ -22,6 +22,11 @@ export function roundQty(value: number, unit: Unit | undefined): number {
       return value < 0.5 ? 0.25 : roundTo(value, 0.5)
     case 'ks':
     case 'štipka':
+    case 'strúčik':
+    case 'hrnček':
+    case 'hrsť':
+    case 'plechovka':
+    case 'balenie':
     case undefined:
       // Whole or half pieces only ("1,5 ks" cibule is fine, "1,37 ks" vajca is not).
       return Math.max(0.5, roundTo(value, 0.5))

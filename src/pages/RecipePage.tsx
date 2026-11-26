@@ -1,7 +1,8 @@
 import { Link, useLocation, useNavigate, useParams, useSearchParams } from 'react-router'
-import { getRecipe } from '../lib/recipes'
+import { getRecipe, totalTime } from '../lib/recipes'
 import type { Recipe } from '../lib/schema'
 import { RecipeImage } from '../components/RecipeImage'
+import { CategoryIcon, chipStyle } from '../components/CategoryIcon'
 import { IngredientList } from '../components/IngredientList'
 import { CookMode } from '../components/CookMode'
 import { useSessionState } from '../hooks/useSessionState'
@@ -19,9 +20,17 @@ export function RecipePage() {
 
 function RecipeView({ recipe }: { recipe: Recipe }) {
   useDocumentTitle(recipe.title)
-  const [servings, setServings] = useSessionState(`servings:${recipe.slug}`, recipe.servings)
+  // Recipes without a stated portion count can't be scaled, so the stepper is hidden for them.
+  const baseServings = recipe.servings
+  const [servings, setServings] = useSessionState(`servings:${recipe.slug}`, baseServings ?? 1)
   const [checked, setChecked] = useSessionState<string[]>(`checked:${recipe.slug}`, [])
-  const factor = servings / recipe.servings
+  const factor = baseServings ? servings / baseServings : 1
+  const total = totalTime(recipe)
+  const times = [
+    [s.prepTime, recipe.prepTime],
+    [s.cookTime, recipe.cookTime],
+    [s.totalTime, recipe.prepTime !== undefined && recipe.cookTime !== undefined ? total : undefined],
+  ].filter((t): t is [string, number] => t[1] !== undefined)
 
   // Cook mode is part of the URL (?varenie) so the phone's back button/gesture exits it.
   const [params, setParams] = useSearchParams()
@@ -48,25 +57,24 @@ function RecipeView({ recipe }: { recipe: Recipe }) {
       <header className={styles.header}>
         <h1>{recipe.title}</h1>
         <p className={styles.description}>{recipe.description}</p>
-        <dl className={styles.times}>
-          <div>
-            <dt>{s.prepTime}</dt>
-            <dd>{formatDuration(recipe.prepTime)}</dd>
-          </div>
-          <div>
-            <dt>{s.cookTime}</dt>
-            <dd>{formatDuration(recipe.cookTime)}</dd>
-          </div>
-          <div>
-            <dt>{s.totalTime}</dt>
-            <dd>{formatDuration(recipe.prepTime + recipe.cookTime)}</dd>
-          </div>
-        </dl>
+        {times.length > 0 && (
+          <dl className={styles.times}>
+            {times.map(([label, minutes]) => (
+              <div key={label}>
+                <dt>{label}</dt>
+                <dd>{formatDuration(minutes)}</dd>
+              </div>
+            ))}
+          </dl>
+        )}
         {recipe.tags.length > 0 && (
           <ul className={styles.tags}>
             {recipe.tags.map((t) => (
               <li key={t}>
-                <Link to={`/?tag=${encodeURIComponent(t)}`}>{t}</Link>
+                <Link to={`/?tag=${encodeURIComponent(t)}`} style={chipStyle(t)}>
+                  <CategoryIcon tag={t} size={18} />
+                  {t}
+                </Link>
               </li>
             ))}
           </ul>
@@ -80,29 +88,31 @@ function RecipeView({ recipe }: { recipe: Recipe }) {
       <section className={styles.section}>
         <div className={styles.sectionHead}>
           <h2>{s.ingredients}</h2>
-          <div className={styles.stepper} role="group" aria-label={s.servings(servings)}>
-            <button
-              type="button"
-              aria-label={s.fewerServings}
-              disabled={servings <= 1}
-              onClick={() => setServings((n) => Math.max(1, n - 1))}
-            >
-              −
-            </button>
-            <output aria-live="polite">{s.servings(servings)}</output>
-            <button
-              type="button"
-              aria-label={s.moreServings}
-              disabled={servings >= 99}
-              onClick={() => setServings((n) => Math.min(99, n + 1))}
-            >
-              +
-            </button>
-          </div>
+          {baseServings !== undefined && (
+            <div className={styles.stepper} role="group" aria-label={s.servings(servings)}>
+              <button
+                type="button"
+                aria-label={s.fewerServings}
+                disabled={servings <= 1}
+                onClick={() => setServings((n) => Math.max(1, n - 1))}
+              >
+                −
+              </button>
+              <output aria-live="polite">{s.servings(servings)}</output>
+              <button
+                type="button"
+                aria-label={s.moreServings}
+                disabled={servings >= 99}
+                onClick={() => setServings((n) => Math.min(99, n + 1))}
+              >
+                +
+              </button>
+            </div>
+          )}
         </div>
-        {servings !== recipe.servings && (
-          <button type="button" className={styles.linkButton} onClick={() => setServings(recipe.servings)}>
-            {s.resetServings} ({s.servings(recipe.servings)})
+        {baseServings !== undefined && servings !== baseServings && (
+          <button type="button" className={styles.linkButton} onClick={() => setServings(baseServings)}>
+            {s.resetServings} ({s.servings(baseServings)})
           </button>
         )}
         <IngredientList groups={recipe.ingredients} factor={factor} checked={checked} onToggle={toggle} />

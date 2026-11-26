@@ -2,7 +2,21 @@
 // Keep UNITS in sync with the `unit` select options in public/admin/config.yml.
 import { z } from 'zod'
 
-export const UNITS = ['g', 'kg', 'ml', 'l', 'ks', 'lyžica', 'lyžička', 'štipka'] as const
+export const UNITS = [
+  'g',
+  'kg',
+  'ml',
+  'l',
+  'ks',
+  'lyžica',
+  'lyžička',
+  'štipka',
+  'strúčik',
+  'hrnček',
+  'hrsť',
+  'plechovka',
+  'balenie',
+] as const
 export type Unit = (typeof UNITS)[number]
 
 // The CMS may write `null` or '' for empty optional fields; normalise both to undefined.
@@ -12,7 +26,13 @@ const optionalText = z
   .nullish()
   .transform((v) => v || undefined)
 
-const minutes = z.number().int().nonnegative()
+// Optional: many family recipes are written "od oka" without times or a portion count.
+const minutes = z
+  .number()
+  .int()
+  .nonnegative()
+  .nullish()
+  .transform((v) => v ?? undefined)
 
 export const ingredientSchema = z.strictObject({
   qty: z
@@ -36,7 +56,12 @@ export const ingredientGroupSchema = z.strictObject({
 export const recipeFrontmatterSchema = z.strictObject({
   title: z.string().trim().min(1),
   description: z.string().trim().min(1),
-  servings: z.number().int().positive(),
+  servings: z
+    .number()
+    .int()
+    .positive()
+    .nullish()
+    .transform((v) => v ?? undefined),
   prepTime: minutes,
   cookTime: minutes,
   tags: z

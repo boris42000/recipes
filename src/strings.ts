@@ -18,6 +18,11 @@ const unitForms: Record<Unit, [string, string, string]> = {
   lyžica: ['lyžica', 'lyžice', 'lyžíc'],
   lyžička: ['lyžička', 'lyžičky', 'lyžičiek'],
   štipka: ['štipka', 'štipky', 'štipiek'],
+  strúčik: ['strúčik', 'strúčiky', 'strúčikov'],
+  hrnček: ['hrnček', 'hrnčeky', 'hrnčekov'],
+  hrsť: ['hrsť', 'hrste', 'hrstí'],
+  plechovka: ['plechovka', 'plechovky', 'plechoviek'],
+  balenie: ['balenie', 'balenia', 'balení'],
 }
 
 export const unitLabel = (unit: Unit, qty: number) => plural(qty, ...unitForms[unit])

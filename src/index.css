@@ -43,7 +43,11 @@
 
 body {
   margin: 0;
-  background: var(--bg);
+  /* Faint confetti dots for a playful kitchen-notebook feel. */
+  background:
+    radial-gradient(circle, rgb(232 120 70 / 0.10) 1.5px, transparent 2px) 0 0 / 26px 26px,
+    radial-gradient(circle, rgb(80 170 120 / 0.08) 1.5px, transparent 2px) 13px 13px / 26px 26px,
+    var(--bg);
   min-height: 100dvh;
 }
 
@@ -83,6 +87,9 @@ button {
 }
 
 .site-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-family: var(--font-display);
   font-size: 1.35rem;
   font-weight: 700;

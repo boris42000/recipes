@@ -2,8 +2,10 @@ import { useMemo } from 'react'
 import { Link, useSearchParams } from 'react-router'
 import { allTags, recipes, searchRecipes } from '../lib/recipes'
 import { RecipeImage } from '../components/RecipeImage'
+import { CategoryIcon, chipStyle } from '../components/CategoryIcon'
 import { useDocumentTitle } from '../hooks/useDocumentTitle'
 import { formatDuration, s } from '../strings'
+import { totalTime } from '../lib/recipes'
 import styles from './RecipeListPage.module.css'
 
 export function RecipeListPage() {
@@ -55,6 +57,7 @@ export function RecipeListPage() {
         {allTags.length > 0 && (
           <div className={styles.tags} role="group" aria-label={s.tagsLabel}>
             <button type="button" aria-pressed={!tag} onClick={() => update('tag', null)}>
+              <CategoryIcon />
               {s.allTags}
             </button>
             {allTags.map((t) => (
@@ -62,8 +65,10 @@ export function RecipeListPage() {
                 key={t}
                 type="button"
                 aria-pressed={tag === t}
+                style={chipStyle(t)}
                 onClick={() => update('tag', tag === t ? null : t)}
               >
+                <CategoryIcon tag={t} />
                 {t}
               </button>
             ))}
@@ -90,11 +95,15 @@ export function RecipeListPage() {
                   <RecipeImage recipe={r} />
                   <div className={styles.cardBody}>
                     <h2>{r.title}</h2>
-                    <p className={styles.time}>{formatDuration(r.prepTime + r.cookTime)}</p>
+                    {totalTime(r) !== undefined && (
+                      <p className={styles.time}>⏱ {formatDuration(totalTime(r)!)}</p>
+                    )}
                     {r.tags.length > 0 && (
                       <ul className={styles.cardTags}>
                         {r.tags.map((t) => (
-                          <li key={t}>{t}</li>
+                          <li key={t} style={chipStyle(t)}>
+                            {t}
+                          </li>
                         ))}
                       </ul>
                     )}

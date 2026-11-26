@@ -63,19 +63,19 @@ collections:
         widget: number
         value_type: int
         min: 1
-        default: 4
+        required: false
       - name: prepTime
         label: Príprava (minúty)
         widget: number
         value_type: int
         min: 0
-        default: 15
+        required: false
       - name: cookTime
         label: Varenie (minúty)
         widget: number
         value_type: int
         min: 0
-        default: 30
+        required: false
       - name: tags
         label: Štítky
         label_singular: Štítok
@@ -114,7 +114,7 @@ collections:
                 label: Jednotka
                 widget: select
                 required: false
-                options: [g, kg, ml, l, ks, lyžica, lyžička, štipka]
+                options: [g, kg, ml, l, ks, lyžica, lyžička, štipka, strúčik, hrnček, hrsť, plechovka, balenie]
               - { name: item, label: Surovina, widget: string }
               - { name: note, label: Poznámka, widget: string, required: false }
       - name: body

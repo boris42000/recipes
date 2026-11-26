@@ -41,7 +41,8 @@
 
 .times {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
   margin: 0;
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -79,13 +80,24 @@
 }
 
 .tags a {
-  display: inline-block;
+  --chip-hue: 22;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
   font-size: 0.85rem;
-  padding: 4px 10px;
+  font-weight: 600;
+  padding: 3px 11px 3px 6px;
   border-radius: 999px;
-  background: var(--accent-soft);
-  color: var(--text);
+  background: hsl(var(--chip-hue) 90% 92%);
+  color: hsl(var(--chip-hue) 60% 28%);
   text-decoration: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .tags a {
+    background: hsl(var(--chip-hue) 30% 22%);
+    color: hsl(var(--chip-hue) 80% 82%);
+  }
 }
 
 .cookButton {
@@ -184,10 +196,34 @@
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: var(--accent-soft);
-  color: var(--accent);
-  font-weight: 700;
+  background: hsl(var(--step-hue) 90% 88%);
+  color: hsl(var(--step-hue) 70% 30%);
+  font-weight: 800;
   font-size: 0.95rem;
+}
+
+/* Step bubbles cycle through a warm rainbow. */
+.steps li {
+  --step-hue: 20;
+}
+.steps li:nth-child(5n + 2) {
+  --step-hue: 45;
+}
+.steps li:nth-child(5n + 3) {
+  --step-hue: 140;
+}
+.steps li:nth-child(5n + 4) {
+  --step-hue: 200;
+}
+.steps li:nth-child(5n + 5) {
+  --step-hue: 320;
+}
+
+@media (prefers-color-scheme: dark) {
+  .steps li::before {
+    background: hsl(var(--step-hue) 35% 25%);
+    color: hsl(var(--step-hue) 85% 80%);
+  }
 }
 
 .notes {
