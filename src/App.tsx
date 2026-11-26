@@ -1,8 +1,12 @@
+import { lazy, Suspense } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import { Layout } from './components/Layout'
 import { RecipeListPage } from './pages/RecipeListPage'
 import { RecipePage } from './pages/RecipePage'
 import { ErrorPage, NotFoundPage } from './pages/NotFoundPage'
+
+// The editor pulls in the YAML parser; load it only when someone actually edits.
+const EditRecipePage = lazy(() => import('./pages/EditRecipePage').then((m) => ({ default: m.EditRecipePage })))
 
 const router = createBrowserRouter(
   [
@@ -12,6 +16,14 @@ const router = createBrowserRouter(
       children: [
         { index: true, element: <RecipeListPage /> },
         { path: 'recept/:slug', element: <RecipePage /> },
+        {
+          path: 'recept/:slug/upravit',
+          element: (
+            <Suspense fallback={null}>
+              <EditRecipePage />
+            </Suspense>
+          ),
+        },
         { path: '*', element: <NotFoundPage /> },
       ],
     },

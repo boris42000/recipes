@@ -16,6 +16,10 @@ Saving commits straight to `main`. GitHub Actions then rebuilds the site, and it
 
 The editor UI follows the browser language (Slovak is supported). To change it, open the account menu → Settings.
 
+### Directly on the site
+
+Every recipe has an **Upraviť recept** button. It opens the recipe's Markdown file in an editor on the site and commits straight to `main` through the GitHub API. Nothing goes through the CMS. It uses the same GitHub token as `/admin`: if you have signed in there, the editor picks it up automatically, and otherwise it asks for the token once and keeps it in this browser only. The editor checks the recipe against the same schema as the build, so a broken recipe can't be saved.
+
 ### By hand
 
 Create `recipes/<slug>.md`. The filename must be lowercase ASCII with dashes, without diacritics: `bryndzove-halusky.md`. Commit and push.

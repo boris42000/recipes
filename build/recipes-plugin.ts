@@ -3,14 +3,13 @@
 import fs from 'node:fs'
 import path from 'node:path'
 import { marked, type Token, type Tokens } from 'marked'
-import { parse as parseYaml } from 'yaml'
 import type { Plugin } from 'vite'
-import { recipeFrontmatterSchema, type Recipe } from '../src/lib/schema.ts'
+import type { Recipe } from '../src/lib/schema.ts'
+import { parseRecipeSource } from '../src/lib/validateRecipe.ts'
 
 const VIRTUAL_ID = 'virtual:recipes'
 const RESOLVED_ID = '\0' + VIRTUAL_ID
 const SLUG_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
-const FRONTMATTER_RE = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/
 
 // Recipe bodies are plain Markdown; drop any raw HTML so the rendered output is safe to inject.
 marked.use({ renderer: { html: () => '' } })
@@ -30,7 +29,6 @@ export function recipesPlugin(options: { dir: string; publicDir: string }): Plug
     },
     load(id) {
       if (id !== RESOLVED_ID) return
-      this.addWatchFile(recipesDir)
       const recipes = loadRecipes(recipesDir, publicDir)
       return `export default ${JSON.stringify(recipes)}`
     },
@@ -67,30 +65,12 @@ export function loadRecipes(recipesDir: string, publicDir: string): Recipe[] {
     }
 
     const raw = fs.readFileSync(path.join(recipesDir, file), 'utf8')
-    const match = FRONTMATTER_RE.exec(raw)
-    if (!match) {
-      fail('missing YAML frontmatter (the file must start with a "---" block)')
+    const parsed = parseRecipeSource(raw)
+    if (!parsed.ok) {
+      for (const error of parsed.errors) fail(error)
       continue
     }
-    const [, yamlSource = '', body = ''] = match
-
-    let data: unknown
-    try {
-      data = parseYaml(yamlSource)
-    } catch (e) {
-      fail(`invalid YAML: ${(e as Error).message}`)
-      continue
-    }
-
-    const result = recipeFrontmatterSchema.safeParse(data)
-    if (!result.success) {
-      for (const issue of result.error.issues) {
-        const field = issue.path.length ? issue.path.join('.') : '(frontmatter)'
-        fail(`field "${field}": ${issue.message}`)
-      }
-      continue
-    }
-    const fm = result.data
+    const { frontmatter: fm, body } = parsed
 
     if (fm.image && !/^https?:\/\//.test(fm.image)) {
       const imagePath = path.join(publicDir, fm.image.replace(/^\/+/, ''))

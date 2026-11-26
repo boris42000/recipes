@@ -48,9 +48,26 @@ function RecipeView({ recipe }: { recipe: Recipe }) {
 
   return (
     <article className={styles.recipe}>
-      <Link to="/" className={styles.back}>
-        ← {s.backToList}
-      </Link>
+      <div className={styles.topBar}>
+        <Link to="/" className={styles.back}>
+          ← {s.backToList}
+        </Link>
+        <Link to={`/recept/${recipe.slug}/upravit`} className={styles.edit}>
+          <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18">
+            <path
+              fill="currentColor"
+              d="M15.2 4.6a2 2 0 0 1 2.8 0l1.4 1.4a2 2 0 0 1 0 2.8L9.2 19H5v-4.2L15.2 4.6ZM7 15.6V17h1.4l8.6-8.6-1.4-1.4L7 15.6Z"
+            />
+          </svg>
+          {s.editRecipe}
+        </Link>
+      </div>
+
+      {location.state?.saved && (
+        <p className={styles.saved} role="status">
+          {s.editSaved}
+        </p>
+      )}
 
       <RecipeImage recipe={recipe} className={styles.hero} />
 
