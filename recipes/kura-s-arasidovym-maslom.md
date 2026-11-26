@@ -1,7 +1,7 @@
 ---
 title: Kura s arašidovým maslom
 description: Kuracie mäso v krémovej omáčke z arašidového masla, sójovky a kokosového mlieka.
-tags: [kuracie, ázijské, rýchlovka]
+tags: [kuracie, ázijské, hlavné jedlo, rýchlovka]
 ingredients:
   - items:
       - { item: kuracie mäso }

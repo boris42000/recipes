@@ -1,3 +1,29 @@
+.listHead {
+  margin: 4px 0 16px;
+}
+
+.homeLink {
+  display: inline-block;
+  margin-bottom: 6px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.listHead h1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: clamp(2rem, 8vw, 2.8rem);
+  font-weight: 800;
+  font-variation-settings: 'SOFT' 100;
+}
+
+.listHead h1 svg {
+  flex: none;
+  rotate: -8deg;
+}
+
 .controls {
   display: grid;
   gap: 12px;

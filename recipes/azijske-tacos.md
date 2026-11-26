@@ -1,7 +1,7 @@
 ---
 title: Ázijské tacos
 description: Malé mäsové placky so zázvorom, sójovkou, mrkvou a kapustou, s koriandrom a limetkou.
-tags: [tacos, ázijské, mäso]
+tags: [tacos, ázijské, mäso, hlavné jedlo]
 ingredients:
   - group: Mäsová zmes
     items:

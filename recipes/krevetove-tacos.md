@@ -1,7 +1,7 @@
 ---
 title: Krevetové tacos
 description: Opečené krevety v arašidovo-limetkovej omáčke s mangom, avokádom a mrkvou.
-tags: [tacos, ryby, rýchlovka]
+tags: [tacos, ryby, hlavné jedlo, rýchlovka]
 ingredients:
   - group: Tacos
     items:

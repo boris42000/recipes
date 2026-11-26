@@ -1,0 +1,158 @@
+.hero {
+  position: relative;
+  text-align: center;
+  padding: 36px 8px 28px;
+}
+
+.kicker {
+  margin: 0 0 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.title {
+  position: relative;
+  z-index: 1;
+  margin: 0 auto 18px;
+  max-width: 11ch;
+  font-size: clamp(2.6rem, 11vw, 4.2rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  font-variation-settings: 'SOFT' 100;
+}
+
+.highlight {
+  position: relative;
+  white-space: nowrap;
+  color: var(--accent);
+  font-style: italic;
+}
+
+/* Hand-drawn marker swoosh under the highlighted word. */
+.highlight::after {
+  content: '';
+  position: absolute;
+  left: -4%;
+  right: -4%;
+  bottom: 0.02em;
+  height: 0.28em;
+  z-index: -1;
+  border-radius: 999px;
+  background: #fde047;
+  opacity: 0.75;
+  transform: rotate(-1.5deg);
+}
+
+@media (prefers-color-scheme: dark) {
+  .highlight::after {
+    background: #a16207;
+    opacity: 0.6;
+  }
+}
+
+.surprise {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 0 20px;
+  border: 2px solid var(--text);
+  border-radius: 999px;
+  background: var(--surface);
+  font-weight: 700;
+  box-shadow: 3px 3px 0 var(--text);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.surprise:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--text);
+}
+
+.surprise:active {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 var(--text);
+}
+
+.surprise:hover span {
+  display: inline-block;
+  animation: roll 0.6s ease-in-out;
+}
+
+@keyframes roll {
+  50% {
+    transform: rotate(180deg) scale(1.2);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.sticker {
+  position: absolute;
+  opacity: 0.95;
+  filter: drop-shadow(0 4px 0 rgb(0 0 0 / 0.1));
+  animation: float 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.s1 { top: 6px; left: 2%; rotate: -14deg; animation-delay: -1s; }
+.s2 { top: 14px; right: 3%; rotate: 12deg; animation-delay: -3s; }
+.s3 { bottom: 34px; left: 6%; rotate: 10deg; animation-delay: -2s; }
+.s4 { bottom: 26px; right: 7%; rotate: -10deg; animation-delay: -4s; }
+.s5 { top: 46%; left: -6px; rotate: 6deg; animation-delay: -5s; display: none; }
+.s6 { top: 44%; right: -6px; rotate: -8deg; animation-delay: -2.5s; display: none; }
+
+@media (min-width: 640px) {
+  .sticker {
+    width: 72px;
+    height: 72px;
+  }
+  .s5,
+  .s6 {
+    display: block;
+  }
+}
+
+/* Small phones: keep stickers small and out of the headline's way. */
+@media (max-width: 420px) {
+  .hero {
+    padding-top: 52px;
+  }
+  .s1,
+  .s2 {
+    top: 2px;
+  }
+  .sticker {
+    width: 40px;
+    height: 40px;
+    opacity: 0.8;
+  }
+  .s3,
+  .s4 {
+    bottom: 4px;
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sticker,
+  .surprise:hover span {
+    animation: none;
+  }
+}

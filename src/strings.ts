@@ -31,6 +31,17 @@ export const s = {
   appName: 'Naše recepty',
   pageTitle: (title: string) => `${title} · Naše recepty`,
 
+  // Home page
+  homeKicker: (n: number) => `${n} ${plural(n, 'recept', 'recepty', 'receptov')} z našej kuchyne`,
+  homeTitleStart: 'Čo dnes',
+  homeTitleHighlight: 'uvaríme?',
+  surprise: 'Prekvap ma',
+  byFlavor: 'Podľa chuti',
+  allRecipes: (n: number) => `Všetkých ${n} receptov`,
+  allRecipesTitle: 'Všetky recepty',
+  searchResults: 'Výsledky hľadania',
+  categories: 'Kategórie',
+
   // List page
   searchLabel: 'Hľadať recept',
   searchPlaceholder: 'Hľadať recept alebo surovinu…',
@@ -44,7 +55,7 @@ export const s = {
   addRecipe: 'Pridať recept',
 
   // Recipe page
-  backToList: 'Všetky recepty',
+  backToList: 'Späť',
   prepTime: 'Príprava',
   cookTime: 'Varenie',
   totalTime: 'Spolu',

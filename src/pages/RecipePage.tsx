@@ -49,7 +49,17 @@ function RecipeView({ recipe }: { recipe: Recipe }) {
   return (
     <article className={styles.recipe}>
       <div className={styles.topBar}>
-        <Link to="/" className={styles.back}>
+        <Link
+          to="/"
+          className={styles.back}
+          onClick={(e) => {
+            // Came here from a list inside the app: go back to it (with its category and filters).
+            if (location.key !== 'default') {
+              e.preventDefault()
+              navigate(-1)
+            }
+          }}
+        >
           ← {s.backToList}
         </Link>
         <Link to={`/recept/${recipe.slug}/upravit`} className={styles.edit}>

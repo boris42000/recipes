@@ -1,6 +1,7 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { App } from './App'
+import '@fontsource-variable/fraunces/soft.css'
 import './index.css'
 
 // After a deploy the new service worker takes over in the background, but the page still runs the old

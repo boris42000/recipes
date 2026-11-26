@@ -67,6 +67,9 @@ Allowed units: `g`, `kg`, `ml`, `l`, `ks`, `lyžica`, `lyžička`, `štipka`, `s
 
 ### Categories and icons
 
+The home page shows big tiles for the main courses (Hlavné jedlá, Polievky, Sladké, Raňajky) and smaller "Podľa chuti" chips. Both are defined in [`src/lib/courses.ts`](src/lib/courses.ts). A course can group several tags: Sladké is `dezert` + `pečenie`. For a recipe to show up in a tile, give it the matching tag (e.g. every main dish needs `hlavné jedlo`).
+
+
 Tags double as categories. These tags have their own colorful icon and color (defined in [`src/components/CategoryIcon.tsx`](src/components/CategoryIcon.tsx)): `polievka`, `cestoviny`, `ryby`, `kuracie`, `mäso`, `tacos`, `ázijské`, `šalát`, `raňajky`, `dezert`, `pečenie`, `omáčka`, `vegetariánske`, `rýchlovka`, `slovenské`, `vianoce`, `hlavné jedlo`. A recipe without a photo shows the icon of its most specific category. Any other tag gets a cooking pot.
 
 Ingredients get an emoji automatically from their name (rules in [`src/lib/ingredientEmoji.ts`](src/lib/ingredientEmoji.ts), first match wins; unknown ones get 🥄).
